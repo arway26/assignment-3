@@ -50,7 +50,7 @@ function loadDynamicContent() {
 }
 
 async function fetchGitHubStats() {
-    const username = 'arway26';
+    const username = 'arway26'; // Replace with your actual GitHub username
     const container = createGitHubStatsSection();
     
     displayGitHubLoading(container);
@@ -393,33 +393,18 @@ function clearFormErrors() {
 function showSuccessMessage(name) {
     const contactSection = document.getElementById('contact');
     const successDiv = document.createElement('div');
-    
-    successDiv.style.cssText = `
-        background: linear-gradient(135deg, #2ecc71, #27ae60);
-        color: white;
-        padding: 2rem;
-        border-radius: 10px;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
-        animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    `;
-    
+    successDiv.className = 'success-message';
     successDiv.innerHTML = `
-        <span style="font-size: 4rem; margin-bottom: 1rem; display: block; animation: bounceIn 0.8s ease;">✓</span>
-        <h3 style="margin: 0 0 0.8rem 0; font-size: 1.6rem; font-weight: 700; color: white;">Thank you, ${name}!</h3>
-        <p style="margin: 0; font-size: 1.1rem; color: white;">Your message has been saved. I'll get back to you soon!</p>
+        <div class="success-content">
+            <span class="success-icon">✓</span>
+            <h3>Thank you, ${name}!</h3>
+            <p>Your message has been saved. I'll get back to you soon!</p>
+        </div>
     `;
-    
     contactSection.insertBefore(successDiv, contactSection.firstChild);
     successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
     setTimeout(() => {
         successDiv.style.opacity = '0';
-        successDiv.style.transition = 'opacity 0.3s ease';
         setTimeout(() => successDiv.remove(), 300);
     }, 5000);
 }
