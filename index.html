@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta tags for character encoding and responsive design -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO optimization for better search engine visibility -->
+    <meta name="description" content="Arwa Aldawoud - Computer Science student at KFUPM passionate about AI, machine learning, and web development.">
+    <meta name="keywords" content="Arwa Aldawoud, Computer Science, KFUPM, Portfolio, AI, Machine Learning, Web Development">
+    <meta name="author" content="Arwa Aldawoud">
+    
     <title>Arwa Aldawoud - Portfolio</title>
-    <!-- Link to external CSS stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Header section with name, theme switch, and navigation -->
+    <!-- Main header with navigation and theme toggle -->
     <header>
         <h1>Arwa Aldawoud</h1>
+        <p id="greeting"></p>
 
-        <!-- Theme Switch (Light/Dark mode toggle) -->
+        <!-- Light/Dark mode toggle switch -->
         <div class="theme-switch">
             <input type="checkbox" id="themeToggle">
             <label for="themeToggle" class="switch">
@@ -36,15 +41,11 @@
     </header>
 
     <main>
-        <!-- About Section -->
+        <!-- About Me Section -->
         <section id="about">
             <h2>About Me</h2>
             <div class="about-content">
-                <!-- Profile image (emoji) -->
-                <div class="profile-image">
-                    <div class="profile-img">👩‍💻</div>
-                </div>
-                <!-- About text -->
+                <div class="profile-img">👩‍💻</div>
                 <div class="about-text">
                     <p class="tagline">Dedicated junior Computer Science student passionate about AI & machine learning and web development</p>
                     <p>Seeking opportunities to gain hands-on experience and contribute to innovative tech projects. Strong problem-solving skills with a proactive learning approach.</p>
@@ -57,13 +58,12 @@
             <h2>Education</h2>
             <div class="education-content">
                 <div class="education-card">
-                    <!-- Education icon (emoji) -->
                     <div class="education-icon">🎓</div>
                     <div class="education-info">
                         <h3>Bachelor of Science in Computer Science</h3>
                         <p class="institution">KFUPM, Dhahran, Saudi Arabia</p>
                         <p class="graduation">Anticipated Graduation: May 2027</p>
-                        <!-- Relevant coursework list -->
+                        <!-- Relevant coursework -->
                         <div class="coursework">
                             <h4>Relevant Coursework:</h4>
                             <div class="courses">
@@ -84,11 +84,10 @@
         <section id="skills">
             <h2>My Skills</h2>
             <div class="skills-container">
-                <!-- Computer skills category -->
+                <!-- Technical skills -->
                 <div class="skills-category">
                     <h3>Computer</h3>
                     <div class="skills-grid">
-                        <!-- Individual skill items with icons -->
                         <div class="skill-item">
                             <div class="skill-icon">🐍</div>
                             <div class="skill-info">
@@ -115,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Language skills category -->
+                <!-- Language proficiency -->
                 <div class="skills-category">
                     <h3>Language</h3>
                     <div class="soft-skills">
@@ -130,11 +129,16 @@
         <section id="projects">
             <h2>Projects</h2>
             <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <div class="project-image">ICS108 Project</div>
+                <!-- ICS108 Social Media Project -->
+                <div class="project-card collapsible">
+                    <div class="project-header">
+                        <div class="project-image">ICS108 Project</div>
+                        <div class="project-title-wrapper">
+                            <h3>ICS108 Project</h3>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                    </div>
                     <div class="project-content">
-                        <h3>ICS108 Project</h3>
                         <p>This project involved developing a comprehensive social media application featuring core functionalities essential to modern social networking platforms. The application includes user profile creation and customization, friend connection and network building capabilities, and an interactive feed system where users can view, engage with, and respond to posts from their social network.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Java</span>
@@ -142,11 +146,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <div class="project-image">SWE206 Project</div>
+                <!-- SWE206 Reservation System -->
+                <div class="project-card collapsible">
+                    <div class="project-header">
+                        <div class="project-image">SWE206 Project</div>
+                        <div class="project-title-wrapper">
+                            <h3>SWE206 Project</h3>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                    </div>
                     <div class="project-content">
-                        <h3>SWE206 Project</h3>
                         <p>This project involved developing a comprehensive reservation management system for KFUPM facilities. The system was designed to serve multiple user categories, including students, faculty and staff members, as well as student club presidents. The platform streamlines the facility booking process by providing role-based access and functionality tailored to each user type's specific needs and permissions within the university ecosystem.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Software Engineering</span>
@@ -154,11 +163,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <div class="project-image">ISE291 Project</div>
+                <!-- ISE291 Data Science Project -->
+                <div class="project-card collapsible">
+                    <div class="project-header">
+                        <div class="project-image">ISE291 Project</div>
+                        <div class="project-title-wrapper">
+                            <h3>ISE291 Project</h3>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                    </div>
                     <div class="project-content">
-                        <h3>ISE291 Project</h3>
                         <p>This project provided hands-on experience with the complete data science pipeline, encompassing critical stages from initial data preprocessing and cleaning through to model selection and optimization. The work involved implementing best practices in data preparation, exploratory data analysis, feature engineering, and systematic evaluation of multiple machine learning models to identify the most suitable approach for the given dataset and problem domain.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Systems Engineering</span>
@@ -169,11 +183,10 @@
             </div>
         </section>
 
-        <!-- Achievements Section -->
+        <!-- Achievements & Certifications Section -->
         <section id="achievements">
             <h2>Achievements & Certifications</h2>
             <div class="achievements-grid">
-                <!-- Individual achievement cards with icons -->
                 <div class="achievement-card">
                     <div class="achievement-icon">🏆</div>
                     <div>
@@ -217,11 +230,10 @@
             </div>
         </section>
 
-        <!-- Hobbies / Extracurricular Section -->
+        <!-- Extracurricular Activities Section -->
         <section id="hobbies">
             <h2>Extracurricular Activities</h2>
             <div class="hobbies-grid">
-                <!-- Individual hobby cards with icons -->
                 <div class="hobby-card">
                     <div class="hobby-icon">📸</div>
                     <h3>Photography</h3>
@@ -239,18 +251,18 @@
                 </div>
             </div>
         </section>
-
-        <!-- Contact Section -->
+        
+        <!-- Contact Section with form -->
         <section id="contact">
             <h2>Contact Me</h2>
             <div class="contact-content">
-                <!-- Contact details list -->
+                <!-- Contact information -->
                 <ul>
                     <li><strong>Name:</strong> Arwa Aldawoud</li>
                     <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/arwa-aldawoud-9755962a/" target="_blank" rel="noopener noreferrer">arwa-aldawoud</a></li>
                 </ul>
                 
-                <!-- Contact Form -->
+                <!-- Contact form with validation -->
                 <div class="contact-form">
                     <h3>Send a Message</h3>
                     <form>
@@ -276,12 +288,12 @@
         </section>
     </main>
 
-    <!-- Footer section -->
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 Arwa Aldawoud. All rights reserved.</p>
     </footer>
 
-    <!-- Link to external JavaScript file -->
+    <!-- JavaScript for interactivity -->
     <script src="js/script.js"></script>
 </body>
 </html>
