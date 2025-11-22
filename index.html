@@ -5,30 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Performance optimizations -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    
     <!-- SEO Meta Tags -->
     <meta name="description" content="Arwa Aldawoud - Computer Science student at KFUPM passionate about AI, machine learning, and web development.">
     <meta name="keywords" content="Arwa Aldawoud, Computer Science, KFUPM, Portfolio, AI, Machine Learning, Web Development">
     <meta name="author" content="Arwa Aldawoud">
     
     <title>Arwa Aldawoud - Portfolio</title>
-    <!-- Link to external CSS stylesheet -->
+    
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://api.github.com" crossorigin>
+    <link rel="dns-prefetch" href="https://api.github.com">
+    
+    <!-- Link to external CSS stylesheet - render blocking for critical styles -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <!-- Header section with name, theme switch, and navigation -->
     <header>
-        <h1>Arwa Aldawoud</h1>
-        <p id="greeting"></p>
+        <div class="header-top">
+            <div class="header-left">
+                <h1>Arwa Aldawoud</h1>
+                <p id="greeting"></p>
+                
+                <!-- Visitor Name Input -->
+                <div class="visitor-name-input">
+                    <input type="text" id="visitorNameInput" placeholder="Enter your name..." maxlength="30">
+                    <button type="button" id="saveNameBtn" class="save-name-btn">💾 Save Name</button>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <!-- Login/Logout Button -->
+                <div class="login-status">
+                    <button id="loginToggle" class="login-btn">
+                        <span id="loginText">🔐 Login</span>
+                    </button>
+                    <span id="loginStatus" class="login-badge">Not logged in</span>
+                </div>
 
-        <!-- Theme Switch (Light/Dark mode toggle) -->
-        <div class="theme-switch">
-            <input type="checkbox" id="themeToggle">
-            <label for="themeToggle" class="switch">
-                <span class="slider"></span>
-            </label>
+                <!-- Theme Switch (Light/Dark mode toggle) -->
+                <div class="theme-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <label for="themeToggle" class="switch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
         </div>
-
-        <!-- Navigation menu -->
+        
+        <!-- Navigation menu and Visitor Timer row -->
         <nav>
             <ul>
                 <li><a href="#about">About Me</a></li>
@@ -39,6 +68,10 @@
                 <li><a href="#hobbies">Extracurriculars</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="visitor-timer">
+                <span class="timer-icon">⏱️</span>
+                <span id="visitorTimer">You've been here for 0 minutes</span>
+            </div>
         </nav>
     </header>
 
@@ -133,8 +166,11 @@
 
         <!-- Projects Section -->
         <section id="projects">
-            <h2>Projects</h2>
-            <div class="projects-grid">
+            <div class="projects-header">
+                <h2>Projects</h2>
+                <button type="button" id="toggleProjectsBtn" class="toggle-projects-btn">🙈 Hide Projects</button>
+            </div>
+            <div id="projectsContent" class="projects-grid">
                 <!-- Project 1 -->
                 <div class="project-card collapsible">
                     <div class="project-header">
@@ -302,6 +338,7 @@
     </footer>
 
     <!-- Link to external JavaScript file -->
-    <script src="js/script.js"></script>
+    <!-- Defer script loading to improve page load performance -->
+    <script src="js/script.js" defer></script>
 </body>
 </html>

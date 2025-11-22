@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', init);
 
 function init() {
     setupThemeToggle();
+    setupLoginLogout();
+    setupVisitorName();
+    setupProjectsToggle();
     setupSmoothScrolling();
     setupScrollAnimations();
     setupCollapsibleProjects();
@@ -14,6 +17,158 @@ function init() {
     triggerTypingEffect();
     setupContactForm();
     loadDynamicContent();
+    setupVisitorTimer();
+}
+
+// ============================================================================
+// LOGIN/LOGOUT STATE MANAGEMENT
+// ============================================================================
+
+function setupLoginLogout() {
+    const loginBtn = document.getElementById('loginToggle');
+    const loginText = document.getElementById('loginText');
+    const loginStatus = document.getElementById('loginStatus');
+    
+    if (!loginBtn || !loginText || !loginStatus) {
+        return;
+    }
+    
+    // Get saved login state (default to false)
+    const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+    
+    // Update initial state
+    updateLoginUI(isLoggedIn);
+    
+    // Add click event listener
+    loginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Get current state
+        const currentState = localStorage.getItem('userLoggedIn') === 'true';
+        const newState = !currentState;
+        
+        // Save to localStorage
+        localStorage.setItem('userLoggedIn', newState ? 'true' : 'false');
+        
+        // Update UI
+        updateLoginUI(newState);
+        
+        // Show popup notification when logging in
+        if (newState) {
+            showNotification('✅ Logged in successfully!');
+        }
+    });
+    
+    function updateLoginUI(loggedIn) {
+        if (loggedIn) {
+            // Logged in state
+            loginText.textContent = '🔓 Logout';
+            loginStatus.textContent = 'Logged in';
+            loginStatus.classList.add('logged-in-badge');
+            loginStatus.classList.remove('logged-out-badge');
+            loginBtn.classList.add('logged-in');
+            loginBtn.classList.remove('logged-out');
+            loginBtn.title = 'Click to logout';
+        } else {
+            // Logged out state
+            loginText.textContent = '🔐 Login';
+            loginStatus.textContent = 'Not logged in';
+            loginStatus.classList.add('logged-out-badge');
+            loginStatus.classList.remove('logged-in-badge');
+            loginBtn.classList.add('logged-out');
+            loginBtn.classList.remove('logged-in');
+            loginBtn.title = 'Click to login';
+        }
+    }
+}
+
+// ============================================================================
+// NOTIFICATION SYSTEM
+// ============================================================================
+
+function showNotification(message, duration = 3000) {
+    // Remove existing notification if any
+    const existingNotification = document.querySelector('.login-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'login-notification';
+    notification.textContent = message;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Remove after duration
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, duration);
+}
+
+// ============================================================================
+// VISITOR TIMER
+// ============================================================================
+
+function setupVisitorTimer() {
+    const timerElement = document.getElementById('visitorTimer');
+    if (!timerElement) return;
+    
+    // Get start time from sessionStorage (persists during session)
+    let startTime = sessionStorage.getItem('visitorStartTime');
+    
+    if (!startTime) {
+        // First visit - set start time
+        startTime = Date.now();
+        sessionStorage.setItem('visitorStartTime', startTime);
+    } else {
+        startTime = parseInt(startTime);
+    }
+    
+    function updateTimer() {
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - startTime;
+        const minutes = Math.floor(elapsedTime / 60000);
+        const seconds = Math.floor((elapsedTime % 60000) / 1000);
+        
+        let timeText;
+        if (minutes === 0) {
+            timeText = `You've been here for ${seconds} second${seconds !== 1 ? 's' : ''}`;
+        } else if (minutes === 1) {
+            timeText = `You've been here for 1 minute`;
+        } else {
+            timeText = `You've been here for ${minutes} minutes`;
+        }
+        
+        timerElement.textContent = timeText;
+    }
+    
+    // Update immediately
+    updateTimer();
+    
+    // Update every second for accurate display
+    setInterval(updateTimer, 1000);
+    
+    // Handle page visibility - pause/resume tracking
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            // Page is hidden, but we'll keep the timer running
+            // User might come back to see their total time
+        } else {
+            // Page is visible again - timer continues from where it left off
+            updateTimer();
+        }
+    });
 }
 
 // ============================================================================
@@ -730,13 +885,211 @@ function setupCollapsibleProjects() {
     });
 }
 
+// ============================================================================
+// VISITOR NAME GREETING
+// ============================================================================
+
+function setupVisitorName() {
+    const nameInput = document.getElementById('visitorNameInput');
+    const saveBtn = document.getElementById('saveNameBtn');
+    
+    if (!nameInput || !saveBtn) {
+        return;
+    }
+    
+    // Load saved name and populate input if exists
+    const savedName = localStorage.getItem('visitorName');
+    if (savedName) {
+        nameInput.value = savedName;
+    }
+    
+    // Save button click handler
+    saveBtn.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Save name button clicked!');
+        
+        const name = nameInput.value.trim();
+        console.log('Name value:', name);
+        
+        if (!name) {
+            // Show error feedback
+            nameInput.style.borderColor = 'rgba(231, 76, 60, 0.8)';
+            setTimeout(() => {
+                nameInput.style.borderColor = '';
+            }, 2000);
+            console.log('Name is empty, showing error');
+            return false;
+        }
+        
+        // Capitalize first letter
+        const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+        console.log('Capitalized name:', capitalizedName);
+        
+        // Save to localStorage
+        localStorage.setItem('visitorName', capitalizedName);
+        console.log('Name saved to localStorage:', capitalizedName);
+        
+        // Update greeting
+        displayGreeting();
+        
+        // Show success popup
+        showWelcomeNotification(capitalizedName);
+        
+        return false;
+    };
+    
+    // Enter key to save
+    nameInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            saveBtn.click();
+        }
+    });
+}
+
 function displayGreeting() {
     const greeting = document.getElementById('greeting');
-    if (greeting) {
-        const hour = new Date().getHours();
-        const message = hour < 12 ? "Good morning ☀️" : hour < 18 ? "Good afternoon 🌤️" : "Good evening 🌙";
-        greeting.textContent = message + " I'm glad you're here!";
+    if (!greeting) return;
+    
+    // Get saved visitor name
+    const visitorName = localStorage.getItem('visitorName');
+    
+    // Get time-based greeting
+    const hour = new Date().getHours();
+    let timeGreeting = '';
+    if (hour < 12) {
+        timeGreeting = 'Good morning';
+    } else if (hour < 18) {
+        timeGreeting = 'Good afternoon';
+    } else {
+        timeGreeting = 'Good evening';
     }
+    
+    // Display greeting with or without name
+    if (visitorName) {
+        greeting.textContent = `${timeGreeting}, ${visitorName}! Welcome to my portfolio.`;
+    } else {
+        greeting.textContent = `${timeGreeting}! Welcome to my portfolio.`;
+    }
+}
+
+function showWelcomeNotification(name) {
+    // Remove existing notification if any
+    const existingNotification = document.querySelector('.welcome-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'welcome-notification';
+    notification.textContent = `✅ Welcome, ${name}! Your name has been saved.`;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Remove after duration
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// ============================================================================
+// SHOW/HIDE PROJECTS TOGGLE
+// ============================================================================
+
+function setupProjectsToggle() {
+    const toggleBtn = document.getElementById('toggleProjectsBtn');
+    const projectsContent = document.getElementById('projectsContent');
+    
+    if (!toggleBtn || !projectsContent) {
+        return;
+    }
+    
+        // Get saved visibility state (default to visible/false)
+        const isHidden = localStorage.getItem('projectsHidden') === 'true';
+        
+        // Update initial state
+        updateProjectsVisibility(isHidden);
+        
+        // Add click event listener
+        toggleBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Get current state
+            const currentHidden = localStorage.getItem('projectsHidden') === 'true';
+            const newHidden = !currentHidden;
+        
+        // Save to localStorage
+        localStorage.setItem('projectsHidden', newHidden ? 'true' : 'false');
+        
+        // Update UI
+        updateProjectsVisibility(newHidden);
+        
+        // Show popup notification when hiding
+        if (newHidden) {
+            showProjectsNotification('✅ Projects section hidden');
+        }
+        
+        return false;
+    };
+    
+    function updateProjectsVisibility(hidden) {
+        if (hidden) {
+            // Hide projects section
+            projectsContent.style.display = 'none';
+            toggleBtn.textContent = '👁️ Show Projects';
+            toggleBtn.classList.add('show-projects');
+            toggleBtn.classList.remove('hide-projects');
+            toggleBtn.title = 'Click to show projects';
+        } else {
+            // Show projects section
+            projectsContent.style.display = '';
+            toggleBtn.textContent = '🙈 Hide Projects';
+            toggleBtn.classList.add('hide-projects');
+            toggleBtn.classList.remove('show-projects');
+            toggleBtn.title = 'Click to hide projects';
+        }
+    }
+}
+
+function showProjectsNotification(message) {
+    // Remove existing notification if any
+    const existingNotification = document.querySelector('.projects-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'projects-notification';
+    notification.textContent = message;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Remove after duration
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
 }
 
 function addInteractiveFeatures() {
