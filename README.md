@@ -1,87 +1,104 @@
-assignment-2
+# assignment-3
 Arwa Aldawoud – Personal Portfolio
 
 A modern, responsive personal portfolio website showcasing my journey as a Computer Science student at KFUPM, featuring my projects, skills, achievements, and extracurricular activities.
-This updated version introduces new interactive elements, API integration, and accessibility improvements.
+This interactive version includes state management, API integration, performance optimizations, and advanced user interactions.
 
-🌟 Features
+## 🌟 Features
 
-Time-Based Greeting: Displays personalized greetings depending on the user’s local time
+**State Management:**
+- Theme Toggle: Switch between light/dark modes with persistent localStorage
+- Login/Logout Simulation: Toggle login status with visual feedback
+- Visitor Name Personalization: Save name for personalized greeting
+- Projects Visibility Toggle: Show/hide projects section with saved preference
 
-Dark/Light Theme Toggle: Switch between themes with persistent localStorage
+**API Integration:**
+- GitHub Stats: Live data fetching from GitHub API with error handling
 
-GitHub API Integration: Fetches and displays repositories dynamically
+**Complex Logic:**
+- Form Validation: Multi-step validation with real-time feedback
+- Auto-Save: Form draft saving to localStorage
+- Visitor Timer: Real-time session duration tracking
+- AI Message Assistant: Text improvement tool for professional messages
 
-Collapsible Project Sections: Expand and collapse project details interactively
+**Performance & UX:**
+- Responsive Design: Optimized for desktop, tablet, and mobile
+- Smooth Animations: Scroll-triggered effects using Intersection Observer
+- Collapsible Sections: Interactive project cards
+- Accessibility Features: Semantic HTML and keyboard navigation
 
-AI Message Assistant: Simulated assistant that responds to user messages
-
-Contact Form: Includes input validation for better user experience
-
-Responsive Design: Optimized for desktop, tablet, and mobile devices
-
-Accessibility Features: Improved navigation
-
-Smooth Animations: Scroll-triggered effects using Intersection Observer
-
-📁 Project Structure
-
+## 📁 Project Structure
+```
 portfolio/
-├── index.html # Main HTML file
+├── index.html                      # Main HTML file
 ├── css/
-│ └── styles.css # Stylesheet (referenced but not included)
+│   └── styles.css                  # Stylesheet
 ├── js/
-│ └── script.js # JavaScript functionality
+│   └── script.js                   # JavaScript functionality
 ├── docs/
-│ └── ai-usage-report.md # Detailed AI usage documentation
-│ └── technical-documentation.md # Detailed technical documentation
-└── README.md # Project documentation
+│   ├── ai-usage-report.md         # Detailed AI usage documentation
+│   └── technical-documentation.md  # Detailed technical documentation
+├── OPTIMIZATION_REPORT.md          # Performance improvements
+└── README.md                       # Project documentation
+```
 
-🛠 Technologies Used
+## 🛠 Technologies Used
 
-HTML: Semantic markup and accessibility features
+**HTML:** Semantic markup and accessibility features
 
-CSS3: Grid, Flexbox, and animations for modern styling
+**CSS3:** Grid, Flexbox, and animations for modern styling
 
-JavaScript: Dynamic content and event handling
+**JavaScript:** Dynamic content, event handling, and state management
 
-GitHub API: Fetches live project information
+**GitHub API:** Fetches live project information
 
-LocalStorage API: Theme preference persistence
+**LocalStorage API:** State persistence for theme, login, name, and preferences
 
-Intersection Observer API: Efficient scroll animations
+**SessionStorage API:** Visitor timer tracking
 
-💻 Setup Instructions
-Prerequisites
+**Intersection Observer API:** Efficient scroll animations
+
+## 💻 Setup Instructions
+
+### Prerequisites
 
 A modern web browser (Chrome, Firefox, Safari, Edge)
 
 A local web server (optional, for optimal experience)
 
-Local Development
+### Local Development
 
 Clone the repository:
+```bash
+git clone https://github.com/arway26/assignment-3.git
+cd assignment-3
+```
 
-git clone https://github.com/arway26/assignment-2.git
-cd portfolio
-
-
-Simple File Opening
+### Simple File Opening
 
 Open index.html directly in your web browser
 
 Navigate to the project folder and double-click index.html
 
-🤖 AI Usage Summary
+### Using Local Server (Optional)
+```bash
+python -m http.server
+```
+
+Then open: `http://localhost:8000`
+
+## 🤖 AI Usage Summary
 
 This project was developed with assistance from AI tools to enhance productivity and learning outcomes. AI was used for:
 
-Content Generation: Drafting descriptive text and technical documentation
+**Code Generation:** HTML, CSS, and JavaScript suggestions for state management and API integration
 
-Code Assistance: HTML, CSS, and JavaScript suggestions
+**Debugging:** Identifying errors and suggesting fixes
 
-Design Inspiration: Layout improvements and animation ideas
+**Design Inspiration:** Layout improvements and animation ideas
 
-Problem Solving: Debugging and best practice recommendations
+**Problem Solving:** Best practice recommendations and performance optimization
 
-Helping in Code: Helping with new concept in coding
+**Documentation:** Structuring README, technical docs, and AI usage reports
+
+**Detailed AI usage documentation is available in:** `docs/ai-usage-report.md`
