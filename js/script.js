@@ -6,114 +6,19 @@ document.addEventListener('DOMContentLoaded', init);
 
 function init() {
     setupThemeToggle();
-    setupLoginLogout();
     setupVisitorName();
     setupProjectsToggle();
     setupSmoothScrolling();
     setupScrollAnimations();
-    setupCollapsibleProjects();
+    setup3DProjectCards();
+    setupBlobBackgrounds();
     displayGreeting();
     addInteractiveFeatures();
     triggerTypingEffect();
     setupContactForm();
+    setupSendMessageButton();
     loadDynamicContent();
     setupVisitorTimer();
-}
-
-// ============================================================================
-// LOGIN/LOGOUT STATE MANAGEMENT
-// ============================================================================
-
-function setupLoginLogout() {
-    const loginBtn = document.getElementById('loginToggle');
-    const loginText = document.getElementById('loginText');
-    const loginStatus = document.getElementById('loginStatus');
-    
-    if (!loginBtn || !loginText || !loginStatus) {
-        return;
-    }
-    
-    // Get saved login state (default to false)
-    const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
-    
-    // Update initial state
-    updateLoginUI(isLoggedIn);
-    
-    // Add click event listener
-    loginBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Get current state
-        const currentState = localStorage.getItem('userLoggedIn') === 'true';
-        const newState = !currentState;
-        
-        // Save to localStorage
-        localStorage.setItem('userLoggedIn', newState ? 'true' : 'false');
-        
-        // Update UI
-        updateLoginUI(newState);
-        
-        // Show popup notification when logging in
-        if (newState) {
-            showNotification('✅ Logged in successfully!');
-        }
-    });
-    
-    function updateLoginUI(loggedIn) {
-        if (loggedIn) {
-            // Logged in state
-            loginText.textContent = '🔓 Logout';
-            loginStatus.textContent = 'Logged in';
-            loginStatus.classList.add('logged-in-badge');
-            loginStatus.classList.remove('logged-out-badge');
-            loginBtn.classList.add('logged-in');
-            loginBtn.classList.remove('logged-out');
-            loginBtn.title = 'Click to logout';
-        } else {
-            // Logged out state
-            loginText.textContent = '🔐 Login';
-            loginStatus.textContent = 'Not logged in';
-            loginStatus.classList.add('logged-out-badge');
-            loginStatus.classList.remove('logged-in-badge');
-            loginBtn.classList.add('logged-out');
-            loginBtn.classList.remove('logged-in');
-            loginBtn.title = 'Click to login';
-        }
-    }
-}
-
-// ============================================================================
-// NOTIFICATION SYSTEM
-// ============================================================================
-
-function showNotification(message, duration = 3000) {
-    // Remove existing notification if any
-    const existingNotification = document.querySelector('.login-notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'login-notification';
-    notification.textContent = message;
-    
-    // Add to body
-    document.body.appendChild(notification);
-    
-    // Trigger animation
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-    
-    // Remove after duration
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, duration);
 }
 
 // ============================================================================
@@ -193,6 +98,10 @@ function setupThemeToggle() {
             body.classList.remove('dark');
             localStorage.setItem('portfolioTheme', 'light');
         }
+        // Update submission count color when theme changes
+        if (typeof displaySubmissionCount === 'function') {
+            displaySubmissionCount();
+        }
     });
 }
 
@@ -206,39 +115,51 @@ function loadDynamicContent() {
 
 async function fetchGitHubStats() {
     const username = 'arway26'; // Replace with your actual GitHub username
-    const container = createGitHubStatsSection();
+    const githubContactCard = document.getElementById('githubContactCard');
+    const githubContactInfo = document.getElementById('githubContactInfo');
     
-    displayGitHubLoading(container);
+    if (!githubContactCard || !githubContactInfo) return;
+    
+    // Show loading state
+    githubContactInfo.textContent = 'Loading...';
     
     try {
         const response = await fetch(`https://api.github.com/users/${username}`);
         if (!response.ok) throw new Error('Failed to fetch');
         
         const data = await response.json();
-        displayGitHubStats(container, data, username);
+        // Update the contact card with GitHub info including stats
+        githubContactInfo.innerHTML = `
+            <a href="https://github.com/${username}" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; margin-bottom: 0.3rem;">@${username}</a>
+            <div style="font-size: 0.85rem; opacity: 0.9; text-align: center;">${data.public_repos} repos • ${data.followers} followers</div>
+        `;
     } catch (error) {
         console.error('Error:', error);
-        displayGitHubStatsFallback(container, username);
+        // Fallback: just show the username link
+        githubContactInfo.innerHTML = `<a href="https://github.com/${username}" target="_blank" rel="noopener noreferrer">@${username}</a>`;
     }
 }
 
 function createGitHubStatsSection() {
     const contactSection = document.getElementById('contact');
-    const contactContent = contactSection.querySelector('.contact-content ul');
+    const contactContent = contactSection.querySelector('.contact-content');
+    const contactInfo = contactContent.querySelector('.contact-info');
     let container = document.querySelector('.github-stats-container');
     
     if (!container) {
         container = document.createElement('div');
         container.className = 'github-stats-container';
         
-        const isDark = document.body.classList.contains('dark');
-        const bgColor = isDark ? '#222' : 'white';
-        
         container.style.cssText = `
-            margin-top: 2rem; padding: 1.5rem; background: ${bgColor};
-            border-radius: var(--radius); box-shadow: var(--shadow);
+            margin-top: 2rem; padding: 1rem; background: transparent;
+            border-radius: var(--radius); box-shadow: none;
+            max-width: 400px; margin-left: auto; margin-right: auto;
         `;
-        contactContent.parentNode.insertBefore(container, contactContent.nextSibling);
+        if (contactInfo) {
+            contactInfo.parentNode.insertBefore(container, contactInfo.nextSibling);
+        } else {
+            contactContent.appendChild(container);
+        }
     }
     return container;
 }
@@ -254,17 +175,17 @@ function displayGitHubLoading(container) {
 
 function displayGitHubStats(container, data, username) {
     container.innerHTML = `
-        <div style="text-align: center; margin-bottom: 1rem;">
-            <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Connect on GitHub</h3>
+        <div style="text-align: center; margin-bottom: 0.75rem;">
+            <h3 style="color: var(--primary); margin-bottom: 0.25rem; font-size: 1rem;">Connect on GitHub</h3>
             <a href="https://github.com/${username}" target="_blank" rel="noopener noreferrer" 
-               style="color: var(--secondary); text-decoration: none; font-weight: 600; font-size: 1.1rem;">
+               style="color: var(--secondary); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
                 @${username} 🔗
             </a>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
-            <div><div style="font-size: 2rem;">🎯</div><div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">${data.public_repos}</div><div style="color: #666;">Repos</div></div>
-            <div><div style="font-size: 2rem;">👥</div><div style="font-size: 1.5rem; font-weight: bold; color: var(--secondary);">${data.followers}</div><div style="color: #666;">Followers</div></div>
-            <div><div style="font-size: 2rem;">✨</div><div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">${data.following}</div><div style="color: #666;">Following</div></div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; text-align: center;">
+            <div><div style="font-size: 1.5rem;">🎯</div><div style="font-size: 1.1rem; font-weight: bold; color: var(--primary);">${data.public_repos}</div><div style="color: #666; font-size: 0.8rem;">Repos</div></div>
+            <div><div style="font-size: 1.5rem;">👥</div><div style="font-size: 1.1rem; font-weight: bold; color: var(--secondary);">${data.followers}</div><div style="color: #666; font-size: 0.8rem;">Followers</div></div>
+            <div><div style="font-size: 1.5rem;">✨</div><div style="font-size: 1.1rem; font-weight: bold; color: var(--primary);">${data.following}</div><div style="color: #666; font-size: 0.8rem;">Following</div></div>
         </div>
     `;
     container.style.opacity = '0';
@@ -311,7 +232,7 @@ function displayGitHubStatsFallback(container, username) {
 // ============================================================================
 
 function setupContactForm() {
-    const form = document.querySelector('.contact-form form');
+    const form = document.querySelector('#contactForm form');
     if (!form) return;
     
     displaySubmissionCount();
@@ -329,33 +250,44 @@ function displaySubmissionCount() {
     
     if (countDisplay) countDisplay.remove();
     
+    const isDark = document.body.classList.contains('dark');
+    const textColor = isDark ? '#fff' : '#000';
+    
     if (submissions.length === 0) {
         countDisplay = document.createElement('div');
         countDisplay.className = 'submission-count empty-state';
         countDisplay.style.cssText = `
             text-align: center; padding: 1.5rem;
-            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
-            color: #666; border-radius: var(--radius); margin-bottom: 1rem;
-            border: 2px dashed var(--primary);
+            background: transparent;
+            color: ${textColor}; border-radius: var(--radius); margin-bottom: 1rem;
+            border: none;
         `;
         countDisplay.innerHTML = `
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">📭</div>
-            <p style="margin: 0; font-weight: 600; color: var(--text);">No messages sent yet</p>
-            <p style="margin: 0.5rem 0 0; font-size: 0.9rem;">Be the first to send a message using the form below!</p>
+            <p style="margin: 0; font-weight: 600; color: ${textColor};">No messages sent yet</p>
+            <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: ${textColor};">Be the first to send a message using the form below!</p>
         `;
     } else {
         countDisplay = document.createElement('div');
         countDisplay.className = 'submission-count';
         countDisplay.style.cssText = `
             text-align: center; padding: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white; border-radius: var(--radius); margin-bottom: 1rem; font-weight: 600;
+            background: transparent;
+            color: ${textColor} !important; border-radius: var(--radius); margin-bottom: 1rem; font-weight: 600;
         `;
-        countDisplay.textContent = `📬 You've sent ${submissions.length} message${submissions.length !== 1 ? 's' : ''}!`;
+        countDisplay.innerHTML = `<span style="color: ${textColor} !important;">📬 You've sent ${submissions.length} message${submissions.length !== 1 ? 's' : ''}!</span>`;
     }
     
     const contactContent = contactSection.querySelector('.contact-content');
-    contactContent.insertBefore(countDisplay, contactContent.firstChild);
+    const sendMessageBtnContainer = contactContent.querySelector('.send-message-btn-container');
+    
+    // Insert after contact-info and before send-message-btn-container
+    if (sendMessageBtnContainer) {
+        contactContent.insertBefore(countDisplay, sendMessageBtnContainer);
+    } else {
+        // Fallback: insert at the end if button container not found
+        contactContent.appendChild(countDisplay);
+    }
 }
 
 function addCharacterCounter(form) {
@@ -508,6 +440,19 @@ function handleFormSubmit(e) {
                 e.target.reset();
                 localStorage.removeItem('contactFormDraft');
                 displaySubmissionCount();
+                
+                // Hide form and show button again after successful submission
+                const contactForm = document.getElementById('contactForm');
+                const sendMessageBtn = document.getElementById('sendMessageBtn');
+                if (contactForm && sendMessageBtn) {
+                    contactForm.classList.remove('show');
+                    setTimeout(() => {
+                        contactForm.style.display = 'none';
+                        sendMessageBtn.style.display = 'block';
+                        // Scroll to button
+                        sendMessageBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 400);
+                }
             } catch (error) {
                 showErrorMessage('Failed to save your message. Please try again.');
             } finally {
@@ -874,14 +819,54 @@ function setupScrollAnimations() {
     document.querySelectorAll('section').forEach(section => observer.observe(section));
 }
 
-function setupCollapsibleProjects() {
-    document.querySelectorAll('.project-card.collapsible').forEach(card => {
-        card.classList.add('collapsed');
-        
-        card.addEventListener('click', function(e) {
-            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
-            this.classList.toggle('collapsed');
-        });
+// ============================================================================
+// 3D PROJECT CARDS ROTATION
+// ============================================================================
+
+function setup3DProjectCards() {
+    // Cards now flip on hover via CSS, no JavaScript needed
+}
+
+// ============================================================================
+// BLOB BACKGROUND SETUP
+// ============================================================================
+
+function setupBlobBackgrounds() {
+    const blobContainers = document.querySelectorAll('.blob-bg');
+    if (!blobContainers.length) return;
+
+    const getSafePercentage = (margin) =>
+        Math.round(Math.random() * (100 - 2 * margin)) + margin;
+
+    blobContainers.forEach(blobBg => {
+        if (blobBg.dataset.initialized === 'true') return;
+        blobBg.dataset.initialized = 'true';
+
+        const safeArea = 6;
+        let colors = [];
+        const colorAttr = blobBg.getAttribute('data-colors');
+
+        try {
+            colors = JSON.parse(colorAttr);
+        } catch (error) {
+            colors = [];
+        }
+
+        if (!Array.isArray(colors) || colors.length === 0) {
+            colors = ['#667eea', '#764ba2'];
+        }
+
+        const blobCount = parseInt(blobBg.getAttribute('data-blob-count'), 10) || 3;
+
+        for (let i = 0; i < blobCount; i++) {
+            const blob = document.createElement('div');
+            blob.classList.add('blob');
+            blob.style.top = `${getSafePercentage(safeArea)}%`;
+            blob.style.left = `${getSafePercentage(safeArea)}%`;
+            blob.style.animationDelay = `${(Math.random() - 0.5) * 8 * (i + 1)}s`;
+            blob.style.backgroundColor = colors[i % colors.length];
+            blobBg.appendChild(blob);
+        }
     });
 }
 
@@ -1127,6 +1112,52 @@ function triggerTypingEffect() {
             }
         };
         setTimeout(type, 500);
+    }
+}
+
+// ============================================================================
+// SEND MESSAGE BUTTON
+// ============================================================================
+
+function setupSendMessageButton() {
+    const sendMessageBtn = document.getElementById('sendMessageBtn');
+    const contactForm = document.getElementById('contactForm');
+    const hideMessageBtn = document.getElementById('hideMessageBtn');
+    
+    if (!sendMessageBtn || !contactForm) {
+        return;
+    }
+    
+    // Show form when "Send a Message" is clicked
+    sendMessageBtn.addEventListener('click', () => {
+        // Hide button
+        sendMessageBtn.style.display = 'none';
+        
+        // Show form with animation
+        contactForm.style.display = 'block';
+        setTimeout(() => {
+            contactForm.classList.add('show');
+        }, 10);
+        
+        // Scroll to form smoothly
+        setTimeout(() => {
+            contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    });
+    
+    // Hide form when "Hide Form" is clicked
+    if (hideMessageBtn) {
+        hideMessageBtn.addEventListener('click', () => {
+            // Hide form with animation
+            contactForm.classList.remove('show');
+            setTimeout(() => {
+                contactForm.style.display = 'none';
+                // Show button again
+                sendMessageBtn.style.display = 'block';
+                // Scroll to button
+                sendMessageBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        });
     }
 }
 
