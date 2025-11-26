@@ -157,6 +157,8 @@ Used to fetch GitHub profile information including repositories, followers, and 
 
 **Testing Tools:** Lighthouse for performance testing, Chrome DevTools for debugging.
 
+**CodePen.io:** Community examples referenced for design patterns and animation techniques including 3D card flip animations, interactive UI components, and CSS transform effects.
+
 
 ## 🚀 Deployment
 

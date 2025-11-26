@@ -5,7 +5,8 @@
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
-    setupThemeToggle();
+    setupThemeToggle(); // Set theme first
+    setupParallaxStars(); // Then generate stars with correct colors
     setupVisitorName();
     setupProjectsToggle();
     setupSmoothScrolling();
@@ -19,6 +20,63 @@ function init() {
     setupSendMessageButton();
     loadDynamicContent();
     setupVisitorTimer();
+}
+
+// ============================================================================
+// PARALLAX STARS BACKGROUND
+// ============================================================================
+
+function multipleBoxShadow(n, color) {
+    let value = '';
+    for (let i = 0; i < n; i++) {
+        const x = Math.floor(Math.random() * 2000);
+        const y = Math.floor(Math.random() * 2000);
+        value += `${x}px ${y}px ${color}`;
+        if (i < n - 1) {
+            value += ', ';
+        }
+    }
+    return value;
+}
+
+function setupParallaxStars() {
+    const stars = document.getElementById('stars');
+    const stars2 = document.getElementById('stars2');
+    const stars3 = document.getElementById('stars3');
+    
+    // Check if dark mode is active
+    const isDarkMode = document.body.classList.contains('dark');
+    const starColor = isDarkMode ? '#FFF' : '#4A5568'; // White for dark mode, dark gray for light mode
+    
+    if (stars) {
+        const shadowsSmall = multipleBoxShadow(700, starColor);
+        stars.style.setProperty('--star-shadow', shadowsSmall);
+        stars.style.boxShadow = shadowsSmall;
+        // Force opacity for dark mode
+        if (isDarkMode) {
+            stars.style.opacity = '1';
+        }
+    }
+    
+    if (stars2) {
+        const shadowsMedium = multipleBoxShadow(200, starColor);
+        stars2.style.setProperty('--star-shadow', shadowsMedium);
+        stars2.style.boxShadow = shadowsMedium;
+        // Force opacity for dark mode
+        if (isDarkMode) {
+            stars2.style.opacity = '1';
+        }
+    }
+    
+    if (stars3) {
+        const shadowsBig = multipleBoxShadow(100, starColor);
+        stars3.style.setProperty('--star-shadow', shadowsBig);
+        stars3.style.boxShadow = shadowsBig;
+        // Force opacity for dark mode
+        if (isDarkMode) {
+            stars3.style.opacity = '1';
+        }
+    }
 }
 
 // ============================================================================
@@ -83,21 +141,32 @@ function setupVisitorTimer() {
 function setupThemeToggle() {
     const toggle = document.getElementById('themeToggle');
     const body = document.body;
+    const html = document.documentElement;
     const savedTheme = localStorage.getItem('portfolioTheme');
     
     if (savedTheme === 'dark') {
         body.classList.add('dark');
+        html.classList.add('dark-mode');
         toggle.checked = true;
     }
+    
+    // Regenerate stars after theme is set (with slight delay to ensure class is applied)
+    setTimeout(() => {
+        setupParallaxStars();
+    }, 50);
     
     toggle.addEventListener('change', () => {
         if (toggle.checked) {
             body.classList.add('dark');
+            html.classList.add('dark-mode');
             localStorage.setItem('portfolioTheme', 'dark');
         } else {
             body.classList.remove('dark');
+            html.classList.remove('dark-mode');
             localStorage.setItem('portfolioTheme', 'light');
         }
+        // Regenerate stars with new theme colors
+        setupParallaxStars();
         // Update submission count color when theme changes
         if (typeof displaySubmissionCount === 'function') {
             displaySubmissionCount();

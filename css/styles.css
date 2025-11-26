@@ -1,3 +1,119 @@
+/* ---------- Parallax Stars Background ---------- */
+html {
+  height: 100%;
+  background: #D0E8F2;
+  overflow-x: hidden;
+  transition: background 0.4s ease;
+}
+
+/* Dark mode background - applied via JavaScript but fallback here */
+html.dark-mode {
+  background: #090A0F;
+}
+
+#stars,
+#stars2,
+#stars3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  z-index: -3;
+  pointer-events: none;
+  transition: box-shadow 0.4s ease;
+}
+
+/* Light mode stars - more subtle */
+#stars,
+#stars2,
+#stars3 {
+  opacity: 0.6;
+}
+
+/* Dark mode stars - fully visible */
+body.dark #stars,
+body.dark #stars2,
+body.dark #stars3 {
+  opacity: 1;
+}
+
+/* Ensure stars are visible in dark mode */
+html.dark-mode #stars,
+html.dark-mode #stars2,
+html.dark-mode #stars3 {
+  opacity: 1;
+}
+
+#stars {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  animation: animStar 50s linear infinite;
+}
+
+#stars:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: var(--star-shadow, inherit);
+}
+
+#stars2 {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  animation: animStar 100s linear infinite;
+}
+
+#stars2:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: var(--star-shadow, inherit);
+}
+
+#stars3 {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  animation: animStar 150s linear infinite;
+}
+
+#stars3:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: var(--star-shadow, inherit);
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+/* Override body background when stars are present */
+body {
+  background: transparent;
+}
+
 /* ---------- Global Styles ---------- */
 :root {
   --primary: #667eea;
@@ -6,7 +122,7 @@
   --dark: #222;
   --text: #333;
   --radius: 10px;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   --transition-speed: 0.3s;
   --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -20,10 +136,10 @@
 body {
   font-family: "Segoe UI", Roboto, sans-serif;
   line-height: 1.7;
-  background: var(--light);
+  background: transparent;
   color: var(--text);
   overflow-x: hidden;
-  transition: background 0.4s var(--transition-ease), color 0.4s var(--transition-ease);
+  transition: color 0.4s var(--transition-ease);
   min-height: 100vh;
   position: relative;
 }
@@ -31,7 +147,7 @@ body {
 .global-blob-wrapper {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
   overflow: hidden;
 }
@@ -56,14 +172,18 @@ header {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
   padding: 1rem 2rem;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 999;
+  left: 0;
+  right: 0;
+  z-index: 9999;
   box-shadow: var(--shadow);
   animation: slideDown 0.5s var(--transition-ease);
   /* Performance optimization: GPU acceleration for sticky header */
+  will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
+  width: 100%;
 }
 
 header h1 {
@@ -119,6 +239,7 @@ header h1:hover {
   gap: 1.5rem;
   max-width: 1100px;
   margin: 0 auto;
+  margin-top: 80px;
 }
 
 .greeting-content {
@@ -288,12 +409,11 @@ body.dark #visitorNameInput:focus {
   padding: 0.5rem 1rem;
   display: flex;
   color: var(--text);
-  transition: all 0.4s var(--transition-ease);
+  transition: all var(--transition-speed) var(--transition-ease);
   align-items: center;
   gap: 0.5rem;
   font-size: 0.85rem;
   white-space: nowrap;
-  transition: all var(--transition-speed) var(--transition-ease);
   border: 1px solid rgba(255, 255, 255, 0.2);
   width: fit-content;
   flex-shrink: 0;
@@ -420,9 +540,9 @@ body.dark #visitorTimer {
 
 /* ---------- Sections ---------- */
 section {
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   max-width: 1100px;
-  margin: auto;
+  margin: 0 auto;
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 0.8s var(--transition-ease), transform 0.8s var(--transition-ease);
@@ -442,18 +562,7 @@ h2 {
 }
 
 h2::after {
-  content: "";
-  display: block;
-  width: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  margin: 1rem auto 0;
-  border-radius: 5px;
-  transition: width 0.8s var(--transition-ease);
-}
-
-section.animate-in h2::after {
-  width: 80px;
+  display: none;
 }
 
 /* ---------- About Section ---------- */
@@ -502,20 +611,22 @@ section.animate-in h2::after {
 }
 
 .education-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
   padding: 2rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   display: flex;
   gap: 1.5rem;
   align-items: flex-start;
   transition: all 0.4s var(--transition-ease);
   animation: fadeInUp 0.8s var(--transition-ease);
+  border: none;
 }
 
 .education-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 .education-icon {
@@ -606,11 +717,13 @@ section.animate-in h2::after {
   display: flex;
   gap: 1rem;
   align-items: center;
-  background: white;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
   padding: 1rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   transition: all 0.4s var(--transition-ease);
+  border: none;
   opacity: 0;
   transform: translateX(-30px);
 }
@@ -626,7 +739,7 @@ section.animate-in .skill-item:nth-child(4) { animation-delay: 0.4s; }
 
 .skill-item:hover {
   transform: translateX(10px) scale(1.03);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .skill-icon {
@@ -807,7 +920,7 @@ section.animate-in .project-card-container:nth-child(3) { animation-delay: 0.3s;
   border-radius: 25px;
   transition: all 1s ease;
   transform-style: preserve-3d;
-  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
   cursor: pointer;
 }
 
@@ -859,14 +972,18 @@ section.animate-in .project-card-container:nth-child(3) { animation-delay: 0.3s;
 }
 
 .project-card-front {
-  background: white;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
   transform-style: preserve-3d;
+  border: none;
 }
 
 .project-card-back {
   transform: rotateY(180deg);
-  background: white;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
   transform-style: preserve-3d;
+  border: none;
 }
 
 .project-card-contents .project-tech {
@@ -907,15 +1024,17 @@ section.animate-in .project-card-container:nth-child(3) { animation-delay: 0.3s;
 }
 
 .achievement-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
   padding: 1.5rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   display: flex;
   gap: 1rem;
   transition: all 0.4s var(--transition-ease);
   opacity: 0;
   transform: scale(0.9);
+  border: none;
 }
 
 section.animate-in .achievement-card {
@@ -930,7 +1049,7 @@ section.animate-in .achievement-card:nth-child(5) { animation-delay: 0.5s; }
 
 .achievement-card:hover {
   transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 .achievement-icon {
@@ -962,14 +1081,16 @@ section.animate-in .achievement-card:nth-child(5) { animation-delay: 0.5s; }
 }
 
 .hobby-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
   padding: 1.5rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   transition: all 0.4s var(--transition-ease);
   text-align: center;
   opacity: 0;
   transform: translateY(30px);
+  border: none;
 }
 
 section.animate-in .hobby-card {
@@ -982,7 +1103,7 @@ section.animate-in .hobby-card:nth-child(3) { animation-delay: 0.3s; }
 
 .hobby-card:hover {
   transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 .hobby-icon {
@@ -1346,16 +1467,18 @@ body.dark .contact-info .card-content span a {
 }
 
 .contact-form {
-  background: white;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
   padding: 2rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
   width: 100%;
   transition: all 0.4s var(--transition-ease);
+  border: none;
   opacity: 0;
   transform: translateY(-20px);
   max-height: 0;
@@ -1371,7 +1494,7 @@ body.dark .contact-info .card-content span a {
 
 .contact-form:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .contact-form h3 {
@@ -1547,7 +1670,12 @@ body.dark .contact-info .card-content span a {
 footer {
   text-align: center;
   padding: 2rem;
-  background: var(--dark);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+}
+
+body.dark footer {
+  background: linear-gradient(135deg, #1f1f1f, #333);
   color: #ccc;
 }
 
@@ -1649,7 +1777,7 @@ footer {
 
 /* ---------- Dark Mode ---------- */
 body.dark {
-  background: #121212;
+  background: transparent;
   color: #eaeaea;
 }
 
@@ -1678,8 +1806,10 @@ body.dark .education-card,
 body.dark .contact-form,
 body.dark .project-card-front,
 body.dark .project-card-back {
-  background: #222;
+  background: rgba(34, 34, 34, 0.3);
+  backdrop-filter: blur(5px);
   color: #eee;
+  border: none;
 }
 
 body.dark .project-card-contents h2,

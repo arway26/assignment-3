@@ -8,6 +8,7 @@
     <!-- Performance optimizations -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#667eea">
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="Arwa Aldawoud - Computer Science student at KFUPM passionate about AI, machine learning, and web development.">
@@ -23,13 +24,27 @@
     <link rel="preconnect" href="https://api.github.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.github.com">
     
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome for icons - preconnect for faster loading -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Google Fonts - Lato with font-display swap for performance -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap' rel='stylesheet' type='text/css'>
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="css/styles.css" as="style">
     
     <!-- Link to external CSS stylesheet - render blocking for critical styles -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Parallax Stars Background -->
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    
     <div class="global-blob-wrapper">
         <div class="blob-bg" data-blob-count="5" data-colors='["#667eea", "#764ba2"]'></div>
     </div>
@@ -89,7 +104,7 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <!-- Profile image -->
-                <img src="assets/images/2.webp" alt="Arwa Aldawoud" class="profile-img">
+                <img src="assets/images/2.webp" alt="Arwa Aldawoud" class="profile-img" loading="lazy" width="250" height="250">
                 <!-- About text -->
                 <div class="about-text">
                     <p class="tagline">Dedicated junior Computer Science student passionate about AI & machine learning and web development</p>
@@ -326,28 +341,28 @@
                 <!-- Contact Info Cards -->
                 <div class="contact-info">
                     <div class="card">
-                        <img src="assets/images/3.webp" alt="Email" class="icon">
+                        <img src="assets/images/3.webp" alt="Email" class="icon" loading="lazy" width="48" height="48">
                         <div class="card-content">
                             <h3>Email</h3>
                             <span>s202242580@kfupm.edu.sa</span>
                         </div>
                     </div>
                     <div class="card">
-                        <img src="assets/images/5.webp" alt="LinkedIn" class="icon">
+                        <img src="assets/images/5.webp" alt="LinkedIn" class="icon" loading="lazy" width="48" height="48">
                         <div class="card-content">
                             <h3>LinkedIn</h3>
                             <span><a href="https://www.linkedin.com/in/arwa-aldawoud-9755962a6/" target="_blank" rel="noopener noreferrer">arwa-aldawoud</a></span>
                         </div>
                     </div>
                     <div class="card">
-                        <img src="assets/images/4.webp" alt="Location" class="icon">
+                        <img src="assets/images/4.webp" alt="Location" class="icon" loading="lazy" width="48" height="48">
                         <div class="card-content">
                             <h3>Location</h3>
                             <span>Dhahran, KSA</span>
                         </div>
                     </div>
                     <div class="card" id="githubContactCard">
-                        <img src="assets/images/6.webp" alt="GitHub" class="icon">
+                        <img src="assets/images/6.webp" alt="GitHub" class="icon" loading="lazy" width="48" height="48">
                         <div class="card-content">
                             <h3>GITHUB</h3>
                             <span id="githubContactInfo">Loading...</span>
