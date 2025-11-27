@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', init);
 
 function init() {
     setupThemeToggle(); // Set theme first
-    setupParallaxStars(); // Then generate stars with correct colors
     setupVisitorName();
     setupProjectsToggle();
     setupSmoothScrolling();
@@ -151,11 +150,6 @@ function setupThemeToggle() {
         toggle.checked = true;
     }
     
-    // Regenerate stars after theme is set (with slight delay to ensure class is applied)
-    setTimeout(() => {
-        setupParallaxStars();
-    }, 50);
-    
     toggle.addEventListener('change', () => {
         if (toggle.checked) {
             body.classList.add('dark');
@@ -166,8 +160,6 @@ function setupThemeToggle() {
             html.classList.remove('dark-mode');
             localStorage.setItem('portfolioTheme', 'light');
         }
-        // Regenerate stars with new theme colors
-        setupParallaxStars();
         // Update submission count color when theme changes
         if (typeof displaySubmissionCount === 'function') {
             displaySubmissionCount();
