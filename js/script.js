@@ -12,6 +12,7 @@ function init() {
     setupSmoothScrolling();
     setupScrollAnimations();
     setup3DProjectCards();
+    setupSkillsCarousel();
     setupBlobBackgrounds();
     displayGreeting();
     addInteractiveFeatures();
@@ -894,6 +895,70 @@ function setupScrollAnimations() {
 
 function setup3DProjectCards() {
     // Cards now flip on hover via CSS, no JavaScript needed
+}
+
+// ============================================================================
+// SKILLS CAROUSEL
+// ============================================================================
+
+function setupSkillsCarousel() {
+    const carouselList = document.querySelector('.carousel__list');
+    const carouselItems = document.querySelectorAll('.carousel__item');
+    
+    if (!carouselList || !carouselItems.length) {
+        return;
+    }
+    
+    const elems = Array.from(carouselItems);
+    
+    carouselList.addEventListener('click', function (event) {
+        var clickedElement = event.target;
+        var carouselItem = clickedElement.closest('.carousel__item');
+        
+        if (!carouselItem) {
+            return;
+        }
+        
+        var currentPos = parseInt(carouselItem.dataset.pos);
+        if (currentPos === 0) {
+            return; // Already active
+        }
+        
+        update(carouselItem);
+    });
+    
+    const update = function(newActive) {
+        const newActivePos = parseInt(newActive.dataset.pos);
+        
+        const current = elems.find((elem) => parseInt(elem.dataset.pos) === 0);
+        const prev = elems.find((elem) => parseInt(elem.dataset.pos) === -1);
+        const next = elems.find((elem) => parseInt(elem.dataset.pos) === 1);
+        const first = elems.find((elem) => parseInt(elem.dataset.pos) === -2);
+        const last = elems.find((elem) => parseInt(elem.dataset.pos) === 2);
+        const second = elems.find((elem) => parseInt(elem.dataset.pos) === -3);
+        const secondLast = elems.find((elem) => parseInt(elem.dataset.pos) === 3);
+        
+        if (current) {
+            current.classList.remove('carousel__item_active');
+        }
+        
+        const itemsToUpdate = [current, prev, next, first, last, second, secondLast].filter(Boolean);
+        
+        itemsToUpdate.forEach(item => {
+            var itemPos = parseInt(item.dataset.pos);
+            item.dataset.pos = getPos(itemPos, newActivePos);
+        });
+    };
+    
+    const getPos = function (current, active) {
+        const diff = current - active;
+        
+        if (Math.abs(current - active) > 3) {
+            return -current;
+        }
+        
+        return diff;
+    };
 }
 
 // ============================================================================

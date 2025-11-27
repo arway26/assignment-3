@@ -18,7 +18,7 @@
     <title>Arwa Aldawoud - Portfolio</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="assets/images/1.webp">
+    <link rel="icon" type="image/webp" href="assets/images/favicon.webp">
     
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://api.github.com" crossorigin>
@@ -60,8 +60,7 @@
                             <li><a href="#education">Education</a></li>
                             <li><a href="#skills">Skills</a></li>
                             <li><a href="#projects">Projects</a></li>
-                            <li><a href="#achievements">Achievements</a></li>
-                            <li><a href="#hobbies">Extracurriculars</a></li>
+                            <li><a href="#achievements">Experiences</a></li>
                             <li><a href="#contact">Contact</a></li>
                         </ul>
                     </nav>
@@ -104,7 +103,7 @@
             <h2>About Me</h2>
             <div class="about-content">
                 <!-- Profile image -->
-                <img src="assets/images/2.webp" alt="Arwa Aldawoud" class="profile-img" loading="lazy" width="250" height="250">
+                    <img src="assets/images/profile.webp" alt="Arwa Aldawoud" class="profile-img" loading="lazy" width="250" height="250">
                 <!-- About text -->
                 <div class="about-text">
                     <p class="tagline">Dedicated junior Computer Science student passionate about AI & machine learning and web development</p>
@@ -124,18 +123,6 @@
                         <h3>Bachelor of Science in Computer Science</h3>
                         <p class="institution">KFUPM, Dhahran, Saudi Arabia</p>
                         <p class="graduation">Anticipated Graduation: May 2027</p>
-                        <!-- Relevant coursework list -->
-                        <div class="coursework">
-                            <h4>Relevant Coursework:</h4>
-                            <div class="courses">
-                                <span class="course-tag">Calculus I, II & III</span>
-                                <span class="course-tag">Introduction to Python Programming & C</span>
-                                <span class="course-tag">Object-Oriented Programming</span>
-                                <span class="course-tag">Introduction to Software Engineering</span>
-                                <span class="course-tag">Introduction to Data Science</span>
-                                <span class="course-tag">Data Structures & Algorithms</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -143,46 +130,47 @@
 
         <!-- Skills Section -->
         <section id="skills">
-            <h2>My Skills</h2>
-            <div class="skills-container">
-                <!-- Computer skills category -->
-                <div class="skills-category">
-                    <h3>Computer</h3>
-                    <div class="skills-grid">
-                        <!-- Individual skill items with icons -->
-                        <div class="skill-item">
-                            <div class="skill-icon">🐍</div>
-                            <div class="skill-info">
-                                <h4>Python</h4>
+            <h2>Skills</h2>
+            <div class="skills-carousel-wrapper">
+                <div class="carousel">
+                    <ul class="carousel__list">
+                        <li class="carousel__item" data-pos="-2">
+                            <div class="skill-card-content">
+                                <div class="skill-icon"><img src="assets/images/python.png" alt="Python" loading="lazy"></div>
+                                <h3>Python</h3>
                             </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">☕</div>
-                            <div class="skill-info">
-                                <h4>Java</h4>
+                        </li>
+                        <li class="carousel__item" data-pos="-1">
+                            <div class="skill-card-content">
+                                <div class="skill-icon"><img src="assets/images/java.png" alt="Java" loading="lazy"></div>
+                                <h3>Java</h3>
                             </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">🖥️</div>
-                            <div class="skill-info">
-                                <h4>Microsoft Office</h4>
+                        </li>
+                        <li class="carousel__item" data-pos="0">
+                            <div class="skill-card-content">
+                                <div class="skill-icon"><img src="assets/images/html.png" alt="HTML" loading="lazy"></div>
+                                <h3>HTML</h3>
                             </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">🌐</div>
-                            <div class="skill-info">
-                                <h4>HTML, CSS, and JS</h4>
+                        </li>
+                        <li class="carousel__item" data-pos="1">
+                            <div class="skill-card-content">
+                                <div class="skill-icon"><img src="assets/images/css.png" alt="CSS" loading="lazy"></div>
+                                <h3>CSS</h3>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Language skills category -->
-                <div class="skills-category">
-                    <h3>Language</h3>
-                    <div class="soft-skills">
-                        <span class="soft-skill-tag">Arabic (Native)</span>
-                        <span class="soft-skill-tag">English (Advanced)</span>
-                    </div>
+                        </li>
+                        <li class="carousel__item" data-pos="2">
+                            <div class="skill-card-content">
+                                <div class="skill-icon"><img src="assets/images/js.png" alt="JavaScript" loading="lazy"></div>
+                                <h3>JavaScript</h3>
+                            </div>
+                        </li>
+                        <li class="carousel__item" data-pos="3">
+                            <div class="skill-card-content">
+                                <div class="skill-icon"><img src="assets/images/microsoft.png" alt="Microsoft Office" loading="lazy"></div>
+                                <h3>Microsoft Office</h3>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -265,71 +253,167 @@
 
         <!-- Achievements Section -->
         <section id="achievements">
-            <h2>Achievements & Certifications</h2>
-            <div class="achievements-grid">
-                <!-- Individual achievement cards with icons -->
-                <div class="achievement-card">
-                    <div class="achievement-icon">🏆</div>
-                    <div>
-                        <h3>Flutter Weekend Hackathon</h3>
-                        <p>3rd place winner, Google Developer Student Club, KFUPM</p>
-                        <span>Dec 2023</span>
+            <h2>Experience</h2>
+            <div class="cols">
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/flutter.png" alt="Flutter" class="experience-icon" loading="lazy">
+                                <p>Flutter Weekend Hackathon</p>
+                                <span>Dec 2023</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>3rd place winner, Google Developer Student Club, KFUPM</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">🧠</div>
-                    <div>
-                        <h3>AI & ML Bootcamp</h3>
-                        <p>TECHHUB - 15 hours intensive training</p>
-                        <span>Apr 2024</span>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/techhub.png" alt="TECHHUB" class="experience-icon" loading="lazy">
+                                <p>AI & ML Bootcamp</p>
+                                <span>Apr 2024</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>TECHHUB - 15 hours intensive training</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">🤝</div>
-                    <div>
-                        <h3>Community Work Principles</h3>
-                        <p>AlFozan Academy - Raed Basic Program</p>
-                        <span>Sep 2024</span>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/alfozan.png" alt="AlFozan" class="experience-icon" loading="lazy">
+                                <p>Community Work Principles</p>
+                                <span>Sep 2024</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>AlFozan Academy - Raed Basic Program</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">🤖</div>
-                    <div>
-                        <h3>Introduction to AI Program</h3>
-                        <p>Successfully completed comprehensive AI fundamentals course, KAUST Academy</p>
-                        <span>Jan 2025</span>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/kaust.png" alt="KAUST" class="experience-icon" loading="lazy">
+                                <p>Introduction to AI Program</p>
+                                <span>Jan 2025</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>Successfully completed comprehensive AI fundamentals course, KAUST Academy</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">⚡</div>
-                    <div>
-                        <h3>Advanced AI Program</h3>
-                        <p>Completed advanced artificial intelligence specialization, KAUST Academy</p>
-                        <span>Feb 2025</span>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/kaust.png" alt="KAUST" class="experience-icon" loading="lazy">
+                                <p>Advanced AI Program</p>
+                                <span>Feb 2025</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>Completed advanced artificial intelligence specialization, KAUST Academy</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Hobbies / Extracurricular Section -->
-        <section id="hobbies">
-            <h2>Extracurricular Activities</h2>
-            <div class="hobbies-grid">
-                <!-- Individual hobby cards with icons -->
-                <div class="hobby-card">
-                    <div class="hobby-icon">📸</div>
-                    <h3>Photography</h3>
-                    <p>Active member of KFUPM Female Media Club capturing campus events and activities.</p>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/mediaclub.png" alt="Media Club" class="experience-icon" loading="lazy">
+                                <p>Photography</p>
+                                <span>Jan 2024 - May 2025</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>Active member of KFUPM Female Media Club capturing campus events and activities.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="hobby-card">
-                    <div class="hobby-icon">🤝</div>
-                    <h3>Volunteer Work</h3>
-                    <p>Regular volunteer at KFUPM Institute for Knowledge Exchange and KFUPM graduation events.</p>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/kikx.png" alt="KIKX" class="experience-icon" loading="lazy">
+                                <p>Volunteer Work</p>
+                                <span>Jul 2023 - Dec 2024</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>Regular volunteer at KFUPM Institute for Knowledge Exchange and KFUPM graduation events.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="hobby-card">
-                    <div class="hobby-icon">🎯</div>
-                    <h3>Event Management</h3>
-                    <p>Successfully managed and coordinated multiple events for the Female Computer Club at KFUPM.</p>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/computerclub.png" alt="Computer Club" class="experience-icon" loading="lazy">
+                                <p>Event Management</p>
+                                <span>Aug 2024 - May 2025</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>Successfully managed and coordinated multiple events for the Female Computer Club at KFUPM.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/kfupm.svg.png" alt="KFUPM" class="experience-icon" loading="lazy">
+                                <p>United Kingdom Visit</p>
+                                <span>Oct 2025</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>KFUPM Representative</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" ontouchstart="this.classList.toggle('hover');">
+                    <div class="container">
+                        <div class="front">
+                            <div class="inner">
+                                <img src="assets/images/mentorship.png" alt="Mentorship" class="experience-icon" loading="lazy">
+                                <p>Mentee - KFUPM Mentorship Program</p>
+                                <span>Sep 2024 - Dec 2024</span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="inner">
+                                <p>Participated in KFUPM Mentorship Program</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -341,28 +425,28 @@
                 <!-- Contact Info Cards -->
                 <div class="contact-info">
                     <div class="card">
-                        <img src="assets/images/3.webp" alt="Email" class="icon" loading="lazy" width="48" height="48">
+                        <img src="assets/images/gmail.png" alt="Email" class="icon" loading="lazy" width="80" height="80">
                         <div class="card-content">
                             <h3>Email</h3>
-                            <span>s202242580@kfupm.edu.sa</span>
+                            <span>arwayaser26@gmail.com</span>
                         </div>
                     </div>
                     <div class="card">
-                        <img src="assets/images/5.webp" alt="LinkedIn" class="icon" loading="lazy" width="48" height="48">
+                        <img src="assets/images/linkedin.png" alt="LinkedIn" class="icon" loading="lazy" width="70" height="70">
                         <div class="card-content">
                             <h3>LinkedIn</h3>
                             <span><a href="https://www.linkedin.com/in/arwa-aldawoud-9755962a6/" target="_blank" rel="noopener noreferrer">arwa-aldawoud</a></span>
                         </div>
                     </div>
                     <div class="card">
-                        <img src="assets/images/4.webp" alt="Location" class="icon" loading="lazy" width="48" height="48">
+                        <img src="assets/images/location.png" alt="Location" class="icon" loading="lazy" width="80" height="80">
                         <div class="card-content">
                             <h3>Location</h3>
                             <span>Dhahran, KSA</span>
                         </div>
                     </div>
                     <div class="card" id="githubContactCard">
-                        <img src="assets/images/6.webp" alt="GitHub" class="icon" loading="lazy" width="48" height="48">
+                        <img src="assets/images/github.png" alt="GitHub" class="icon" loading="lazy" width="80" height="80">
                         <div class="card-content">
                             <h3>GITHUB</h3>
                             <span id="githubContactInfo">Loading...</span>
@@ -402,10 +486,10 @@
         </section>
     </main>
 
-    <!-- Footer section -->
-    <footer>
+    <!-- Copyright -->
+    <div class="copyright">
         <p>&copy; 2025 Arwa Aldawoud. All rights reserved.</p>
-    </footer>
+    </div>
 
     <!-- Link to external JavaScript file -->
     <!-- Defer script loading to improve page load performance -->
