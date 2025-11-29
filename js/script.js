@@ -511,8 +511,11 @@ function handleFormSubmit(e) {
                     setTimeout(() => {
                         contactForm.style.display = 'none';
                         sendMessageBtn.style.display = 'block';
-                        // Scroll to button
-                        sendMessageBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        // Delay scrolling to button so user can see the thank you message
+                        // Scroll after the success message has been visible for a while
+                        setTimeout(() => {
+                            sendMessageBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 5000);
                     }, 400);
                 }
             } catch (error) {
@@ -564,11 +567,13 @@ function showSuccessMessage(name) {
         </div>
     `;
     contactSection.insertBefore(successDiv, contactSection.firstChild);
+    // Scroll to success message and keep it in view
     successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Keep the message visible longer so user can read it
     setTimeout(() => {
         successDiv.style.opacity = '0';
         setTimeout(() => successDiv.remove(), 300);
-    }, 5000);
+    }, 7000);
 }
 
 function showErrorMessage(message) {
