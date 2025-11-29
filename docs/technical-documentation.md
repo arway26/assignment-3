@@ -15,10 +15,11 @@ assignment-3/
 │   └── styles.css                      # Stylesheet
 ├── js/
 │   └── script.js                       # JavaScript for interactivity
+├── assets/
+│   └── images/                         # Image assets (favicon, profile, logos, skill icons)
 ├── docs/
 │   ├── ai-usage-report.md             # Details AI tools, benefits, challenges, and learning outcomes
 │   └── technical-documentation.md      # Technical details, structure, and implementation overview
-├── OPTIMIZATION_REPORT.md              # Performance improvements documentation
 └── README.md                           # Project description and overview
 ```
 

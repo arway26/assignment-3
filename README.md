@@ -29,16 +29,17 @@ This interactive version includes state management, API integration, performance
 
 ## 📁 Project Structure
 ```
-portfolio/
+assignment-3/
 ├── index.html                      # Main HTML file
 ├── css/
 │   └── styles.css                  # Stylesheet
 ├── js/
 │   └── script.js                   # JavaScript functionality
+├── assets/
+│   └── images/                     # Image assets (favicon, profile, logos, skill icons)
 ├── docs/
 │   ├── ai-usage-report.md         # Detailed AI usage documentation
 │   └── technical-documentation.md  # Detailed technical documentation
-├── OPTIMIZATION_REPORT.md          # Performance improvements
 └── README.md                       # Project documentation
 ```
 
